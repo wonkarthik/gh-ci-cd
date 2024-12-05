@@ -34,7 +34,35 @@
 #         run: |
 #           echo Add other actions to build,
 #           echo test, and deploy your project. 
+##----------------------------------------------------#
+# The jobs are running in parallel without dependency on other
+# name: "Master CI/CD"
+# run-name: "master Ci/CD runned by: ${{ github.actor}}"
 
+# on:
+#     push:
+#         branches:
+#             - "main"
+# # scheduling initial job
+# jobs:
+#     first-job:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: "greeting"
+#               run: echo "my name is ${{ github.actor}}"    
+#     Second-job:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: "greeting"
+#               run: echo "my name is ${{ github.actor}}"
+#     Third-job:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: "greeting"
+#               run: echo "my name is ${{ github.actor}}"                      
+
+##=======================================#
+# running  the jobs in particular sequence 
 name: "Master CI/CD"
 run-name: "master Ci/CD runned by: ${{ github.actor}}"
 
@@ -48,7 +76,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "greeting"
-              run: echo "my name is ${{ github.actor}}"    
+              run: echo "my name is ${{ github.actor}}"   
+    first-second-job:
+        runs-on: ubuntu-latest
+        needs: [first-job]
+        steps:
+            - name: "greeting"
+              run: echo "my name is ${{ github.actor}}"                 
     Second-job:
         runs-on: ubuntu-latest
         steps:
@@ -58,5 +92,4 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "greeting"
-              run: echo "my name is ${{ github.actor}}"                      
-        
+              run: echo "my name is ${{ github.actor}}" 
