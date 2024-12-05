@@ -48,4 +48,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "greeting"
-              run: echo "my name is ${{ github.actor}}"           
+              run: echo "my name is ${{ github.actor}}"    
+    Second-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "greeting"
+              run: echo "my name is ${{ github.actor}}"
+    Third-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "greeting"
+              run: echo "my name is ${{ github.actor}}"                      
+        
