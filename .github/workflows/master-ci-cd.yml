@@ -194,7 +194,7 @@
 #===========================================================
 
 name: "Master CI/CD"
-run-name: "master Ci/CD runned by: ${{ github.actor}}
+run-name: "master Ci/CD runned by: ${{ github.actor}}"
 
 on:
   push:
@@ -255,4 +255,3 @@ jobs:
         steps:
             - name: "greeting"
               run: echo "my name is ${{ github.actor}}"
-              
