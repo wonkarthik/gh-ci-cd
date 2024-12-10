@@ -427,7 +427,7 @@ jobs:
           env:
             NUMBER: ${{ github.event.issue.number }}
     second-workflow:
-      uses: ./.github/workflow/master-ci-cd-second.yml
+      uses: ./.github/workflows/master-ci-cd-second.yml
       with:
         branch: 'main'
         loglevel: 'error'
