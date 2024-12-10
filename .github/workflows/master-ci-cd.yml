@@ -344,14 +344,101 @@
 #             NUMBER: ${{ github.event.issue.number }}
 ###============================================================
 
-# scheduling the jobs
+# scheduling the jobs and invoking the other job by workflow_call
 
+# name: "Master CI/CD"
+# run-name: "master Ci/CD runned by: ${{ github.actor}}"
+
+# on:
+#   schedule:
+#     - cron: "*/5 * * * *"
+#   push:
+#     branches:
+#       - "main"
+#   pull_request:
+#     types: [opened,ready_for_review]
+#   workflow_dispatch:
+#     inputs:
+#       branch:
+#         description: "Branch Name"
+#         default: "main"
+#         required: true
+#       logLevel:
+#         description: 'Log level'
+#         required: true
+#         default: 'warning'
+#         type: choice
+#         options:
+#         - info
+#         - warning
+#         - debug
+#       tags:
+#         description: 'Test scenario tags'
+#         required: false
+#         type: boolean
+#       environment:
+#         description: 'Environment to run tests against'
+#         # type: environment
+#         required: true
+#         type: choice
+#         options:
+#         - dev
+#         - test
+#         - stage
+#         - prod
+#   issue_comment:
+#     types: [created]       
+# jobs:
+#     first-job:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: "greeting"
+#               run: echo "my name is ${{ github.actor}}"    
+#     Second-job:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: "greeting"
+#               run: echo "my name is ${{ github.actor}}"
+#             - name: "Bye"
+#               run : echo "Bye for second job"
+#     Third-job:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: "greeting"
+#               run: echo "my name is ${{ github.actor}}"
+#             - name: "Bye"
+#               run: echo "Bye for third job"
+#             - name: "exit the jobs"
+#               run: echo "all jobs are done"
+#     first-second-job:
+#         runs-on: ubuntu-latest
+#         needs: [first-job,Second-job,Third-job]
+#         steps:
+#             - name: "greeting"
+#               run: echo "my name is ${{ github.actor}}"
+#     pr_commented:
+#       # This job only runs for pull request comments
+#       name: PR comment
+#       if: ${{ github.event.issue.pull_request }}
+#       runs-on: ubuntu-latest
+#       steps:
+#         - run: |
+#             echo A comment on PR $NUMBER
+#           env:
+#             NUMBER: ${{ github.event.issue.number }}
+#     second-workflow:
+#       uses: ./.github/workflows/master-ci-cd-second.yml
+#       with:
+#         branch: 'main'
+#         loglevel: 'error'
+
+#====================================================================
 name: "Master CI/CD"
 run-name: "master Ci/CD runned by: ${{ github.actor}}"
 
 on:
-  schedule:
-    - cron: "*/5 * * * *"
+  # schedule:
+  #   - cron: "*/5 * * * *"
   push:
     branches:
       - "main"
@@ -393,7 +480,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "greeting"
-              run: echo "my name is ${{ github.actor}}"    
+              run: echo "my name is ${{ github.actor}}"
+            - name: Checkout Code
+              uses: actions/checkout@4
+              with:
+                ref: 'main'      
+            - name: list repo files
+              run: ls    
     Second-job:
         runs-on: ubuntu-latest
         steps:
@@ -426,8 +519,8 @@ jobs:
             echo A comment on PR $NUMBER
           env:
             NUMBER: ${{ github.event.issue.number }}
-    second-workflow:
-      uses: ./.github/workflows/master-ci-cd-second.yml
-      with:
-        branch: 'main'
-        loglevel: 'error'
+    # second-workflow:
+    #   uses: ./.github/workflows/master-ci-cd-second.yml
+    #   with:
+    #     branch: 'main'
+    #     loglevel: 'error'
