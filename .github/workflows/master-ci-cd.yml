@@ -482,8 +482,9 @@ jobs:
             - name: "greeting"
               run: echo "my name is ${{ github.actor}}"
             - name: Checkout Code
-              uses: wonkarthik/k8s-notes
+              uses: actions/checkout@v4
               with:
+                repository: 'wonkarthik/k8s-notes'
                 ref: 'main'      
             - name: list repo files
               run: ls    
