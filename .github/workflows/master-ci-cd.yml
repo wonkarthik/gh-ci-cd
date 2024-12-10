@@ -481,13 +481,14 @@ jobs:
         steps:
             - name: "greeting"
               run: echo "my name is ${{ github.actor}}"
-            - name: Checkout Code
+            - name: install git 
+              run: apt get update && apt get install git -y
+            - name: Checkout Code  
               uses: actions/checkout@v4
               with:
-                repository: 'wonkarthik/k8s-notes'
-                ref: 'main'      
+                ref: 'main' 
             - name: list repo files
-              run: ls    
+              run: ls
     Second-job:
         runs-on: ubuntu-latest
         steps:
