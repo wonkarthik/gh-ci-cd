@@ -482,7 +482,7 @@ jobs:
             - name: "greeting"
               run: echo "my name is ${{ github.actor}}"
             - name: install git 
-              run: apt get update && apt get install git -y &&  ldd --version
+              run: ldd --version
             # - name: Checkout Code  
             #   uses: actions/checkout@v4
             #   with:
