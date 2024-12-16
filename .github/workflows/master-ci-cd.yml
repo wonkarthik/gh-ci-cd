@@ -478,6 +478,9 @@ on:
 jobs:
     first-job:
         runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            node-version: [14, 16, 18]
         steps:
             - name: "greeting"
               run: echo "my name is ${{ github.actor}}"
@@ -489,10 +492,12 @@ jobs:
                 ref: 'main' 
             - name: use node.js version 18.16.0
               uses: actions/setup-node@v3
-              # with:
-              #     node-version: 18.16.0
+              with:
+                  node-version: ${{ matrix.node-version }}
             - name: Install dependencies
               run: npm install
+            - name: npm tests
+              run: npm test
             - name: Build App
               run: npm run build            
             - name: list repo files
