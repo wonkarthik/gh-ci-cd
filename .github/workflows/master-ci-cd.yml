@@ -483,10 +483,10 @@ jobs:
               run: echo "my name is ${{ github.actor}}"
             - name: install git 
               run: ldd --version
-            # - name: Checkout Code  
-            #   uses: actions/checkout@v4
-            #   with:
-            #     ref: 'main' 
+            - name: Checkout Code  
+              uses: actions/checkout@v3
+              with:
+                ref: 'main' 
             - name: list repo files
               run: ls
     Second-job:
